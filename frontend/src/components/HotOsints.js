@@ -1,27 +1,20 @@
 import React from "react";
-// import { connect } from "react-redux";
+import { connect } from "react-redux";
 
+import {fetch_osint} from '../actions/OsintAction';
 // import { fetchDangerousOsints } from "../actions/osintActions";
 
 function HotOsints() {
   return (
     <div>
-      <h1>Hot OSINT</h1>
-      <table className="table table-striped">
-        <thead>
-        <tr>
-            <th>OSINT</th> 
-            <th>Last Update Time</th>
-            <th>Osint Type</th>
-            <th>Risk</th>
-        </tr>
-        </thead>
-        <tbody>
-        {/* {mappedOsints} */}
-        </tbody>
-      </table>
+      osints : aaaa
     </div>
   );
 }
 
+
+export default connect(
+  state => ({ osints: state.osints }),
+  dispatch => ({ dispatchAddValue: amount => dispatch(addValue(amount)) })
+)(Counter)
 export default HotOsints;
