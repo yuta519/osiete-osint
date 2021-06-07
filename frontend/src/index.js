@@ -7,7 +7,7 @@ import Header from './Header'
 
 ReactDOM.render(
   <React.StrictMode>
-    <Header />
+    {/* <Header /> */}
     <App />
     {/* <HotOsints /> */}
   </React.StrictMode>,
