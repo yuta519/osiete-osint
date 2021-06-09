@@ -5,7 +5,8 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import reducer from '../reducers'
 
 
-function App() {
+function SearchOsint() {
+
   const [state, dispatch] = useReducer(reducer, [])
   const [osint, setOsint] = useState('')
   const [type, setType] = useState('')
@@ -39,14 +40,10 @@ function App() {
             <option value="3">File Hash</option>
           </select>
         </div>
-        <div className="form-group">
-          <label htmlFor="formEventBody">Comment</label>
-          <textarea className="form-control" id="formEventBody" />
-        </div>
         <button className="btn btn-primary" onClick={ searchOsint }>search</button>
       </form>
 
-      {/* <h4>OSINT List</h4>
+      {/* <h4>OSINT Result</h4>
       <table className="table table-hover">
         <thead>
           <th>No</th>
@@ -65,4 +62,4 @@ function App() {
   )
 }
 
-export default App;
+export default SearchOsint;
