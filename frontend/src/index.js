@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 import App from './components/App';
-import HotOsints from './components/HotOsints'
+// import HotOsints from './components/HotOsints'
 import Header from './components/Header'
 
 ReactDOM.render(
