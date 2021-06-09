@@ -1,25 +1,47 @@
-import React from 'react'
+import React, { useReducer, useState } from 'react'
 
 import 'bootstrap/dist/css/bootstrap.min.css'
 
+import reducer from '../reducers'
+
+
 function App() {
+  const [state, dispatch] = useReducer(reducer, [])
+  const [osint, setOsint] = useState('')
+  const [type, setType] = useState('')
+  
+  const searchOsint = e => {
+    // e.prevetDefault()
+    console.log("search")
+    console.log({osint, type})
+  }
+
   return (
-    <div className='container-fluid'>
+    <div className='container'>
 
       <h4>Search OSINT</h4>
       <form>
         <div className="form-group">
           <label htmlFor="formEventOsint">OSINT</label>
-          <input className="form-control" id="formEventOsint" />
+          <input className="form-control" id="formEventOsint" value={ osint } onChange={e => setOsint(e.target.value)} />
         </div>
         <div className="form-group">
-          <label htmlFor="formEventBody">Body</label>
+          <label htmlFor="formEventType">Type</label>
+          <select className="form-control" id="formEventType" onChange={e => setType(e.currentTarget.value)}>
+            <option value="">---</option>
+            <option value="1">IP Address</option>
+            <option value="2">URL</option>
+            <option value="3">File Hash</option>
+          </select>
+        </div>
+        <div className="form-group">
+          <label htmlFor="formEventBody">Comment</label>
           <textarea className="form-control" id="formEventBody" />
         </div>
-        <button className="btn btn-primary">search</button>
+        <button className="btn btn-primary" onClick={ searchOsint }>search</button>
       </form>
 
-      <h4>OSINT List</h4>
+      {/* <h4>OSINT List</h4>
       <table className="table table-hover">
         <thead>
           <th>No</th>
@@ -32,7 +54,7 @@ function App() {
 
         </tbody>
 
-      </table>
+      </table> */}
       
     </div>
   )
