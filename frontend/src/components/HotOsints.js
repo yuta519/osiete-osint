@@ -1,16 +1,20 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useReducer, useState } from 'react'
 
+import axios from 'axios'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import fetch_osints from '../actions/osintAction'
-import axios from 'axios'
+import reducer from '../reducers'
 
 function HotOsints() {
   const [osints, setOsints] = useState([])
+  const [new_osints, dispatch] = useReducer(reducer, [])
   useEffect(async () => {
+    dispatch('FETCH_OSINTS')
     const response = await axios.get('http://localhost:8000/api/data')
     setOsints(response.data)
   }, [])
   console.log(osints)
+  console.log(new_osints, 'amazing')
 
   return (
     <div className='container'>
