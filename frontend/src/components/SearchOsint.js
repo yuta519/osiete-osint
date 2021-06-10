@@ -44,7 +44,7 @@ function SearchOsint() {
       </form>
 
       {/* <h4>OSINT Result</h4>
-      <table className="table table-hover">
+      <table className="table table-hover table-striped">
         <thead>
           <th>No</th>
           <th>OSINT</th>
