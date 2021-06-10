@@ -6,7 +6,6 @@ import { createStore, applyMiddleware } from 'redux'
 // import App from './components/App'
 import HotOsints from './components/HotOsints'
 import Header from './components/Header'
-import reducer from './reducers'
 // const store = createStore(reducer)
 
 ReactDOM.render(
