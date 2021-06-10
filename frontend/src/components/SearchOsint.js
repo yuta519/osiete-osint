@@ -15,11 +15,7 @@ function SearchOsint() {
     // e.prevetDefault()
     console.log("search")
     console.log({osint, type})
-    dispatch({
-      type: 'SEARCH_OSINT',
-      osint,
-      type
-    })
+    dispatch({type: 'SEARCH_OSINT', osint, type})
   }
 
   return (
