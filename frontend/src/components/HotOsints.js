@@ -7,7 +7,7 @@ import axios from 'axios'
 function HotOsints() {
   const [osints, setOsints] = useState([])
   useEffect(async () => {
-    const response = await axios.get('http://localhost:8000/api/data')
+    const response = await axios.get('http://localhost:8000/api/dangerous_osint/')
     setOsints(response.data)
   }, [])
   console.log(osints)
