@@ -22,20 +22,14 @@ function Header() {
       </nav> */}
       <ul className="nav justify-content-end">
         <li className="nav-item">
-          <a className="nav-link active" aria-current="page" href="#">About</a>
+          <a className="nav-link active" aria-current="page" href="/">Hot OSINTs</a>
         </li>
         <li className="nav-item">
-          <a className="nav-link active" aria-current="page" href="#">Hot OSINT</a>
+          <a className="nav-link" href="/search_osint">Search OSINT</a>
         </li>
         <li className="nav-item">
-          <a className="nav-link" href="#">Search OSINT</a>
+          <a className="nav-link active" aria-current="page" href="what_is_osiete_osint">About</a>
         </li>
-        <li className="nav-item">
-          <a className="nav-link" href="#">Link</a>
-        </li>
-        {/* <li className="nav-item">
-          <a className="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
-        </li> */}
       </ul>
     </>
   )
