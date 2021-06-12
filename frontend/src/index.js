@@ -4,9 +4,9 @@ import { BrowserRouter as Router, Route } from 'react-router-dom'
 
 import About from './components/About'
 import App from './components/App'
+import SearchOsint from './components/SearchOsint'
 import Header from './components/Header'
 import Footer from './components/Footer'
-import SearchOsint from './components/SearchOsint'
 
 ReactDOM.render(
   <React.StrictMode>
