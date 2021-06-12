@@ -1,7 +1,7 @@
 import { FETCH_OSINTS, SEARCH_OSINT } from "../actions/osintAction"
 
 
-export default(state = {}, action) => {
+export default(state = {'test': 'yeaaar'}, action) => {
     switch (action.type) {
         case FETCH_OSINTS:
             return state

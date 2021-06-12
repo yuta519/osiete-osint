@@ -12,14 +12,14 @@ function SearchOsint() {
   const [type, setType] = useState('')
   
   const searchOsint = e => {
-    // e.prevetDefault()
-    console.log("search")
-    console.log({osint, type})
+    e.preventDefault() 
     dispatch({
       type: 'SEARCH_OSINT',
       osint,
       type
     })
+    console.log(state)
+    // console.log({osint, type})
   }
 
   return (
