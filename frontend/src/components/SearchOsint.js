@@ -49,9 +49,7 @@ function SearchOsint() {
           <th>Last Updated</th>
         </thead>
         <tbody>
-
         </tbody>
-
       </table> */}
       
     </div>

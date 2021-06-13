@@ -8,7 +8,7 @@ function Header() {
     <>
       <nav className="navbar navbar-dark bg-dark">
         <div className="container-fuid">
-        <a className="navbar-brand" href="#"> 
+        <a className="navbar-brand" href="/"> 
           OSIETE OSINT
         </a>
         </div>

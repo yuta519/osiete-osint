@@ -15,7 +15,7 @@ ReactDOM.render(
     <Router>
         <Route path="/" exact><App /></Route>
         <Route path="/osint"><OsintDetail /></Route>
-        <Route path="/search_osint" exact><SearchOsint /></Route>
+        <Route path="/search_osint"><SearchOsint /></Route>
         <Route path="/what_is_osiete_osint" exact><About /></Route>
     </Router>
     <Footer />
