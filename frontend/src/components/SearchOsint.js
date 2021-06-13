@@ -7,14 +7,15 @@ import reducer from '../reducers'
 
 function SearchOsint() {
 
-  const [state, dispatch] = useReducer(reducer)
+  const [state, dispatch] = useReducer(reducer, [])
   const [osint, setOsint] = useState('')
   const [type, setType] = useState('')
   
   const searchOsint = e => {
-    e.preventDefault() 
-    dispatch({ type: 'SEARCH_OSINT', osint, type }) 
-    console.log(osint, type, state)
+    // e.prevetDefault()
+    console.log("search")
+    console.log({osint, type})
+    dispatch({type: 'SEARCH_OSINT', osint, type})
   }
 
   return (
@@ -48,9 +49,7 @@ function SearchOsint() {
           <th>Last Updated</th>
         </thead>
         <tbody>
-
         </tbody>
-
       </table> */}
       
     </div>
