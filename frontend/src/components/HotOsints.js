@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import axios from 'axios'
 
+
 function HotOsints() {
   const [osints, setOsints] = useState([])
   
@@ -10,7 +11,6 @@ function HotOsints() {
     const response = await axios.get('http://localhost:8000/api/dangerous_osint/')
     setOsints(response.data)
   }, [])
-  console.log(osints)
 
   return (
     <div className='container'>
@@ -18,7 +18,6 @@ function HotOsints() {
       <table className="table table-hover table-striped">
         <thead>
           <tr>
-            {/* <th>No.</th> */}
             <th>OSINT</th>
             <th>Type</th>
             <th>Risk</th>
@@ -28,7 +27,6 @@ function HotOsints() {
         <tbody>
           { osints.map((osint, index) => (
             <tr key={index}>
-              {/* <td>{ index+1 }</td> */}
               <td><a href={"osint/"+osint.data_id}>{osint.data_id}</a></td>
               { osint.analyzing_type === 1? (<td>IP Address</td>) 
               : osint.analyzing_type === 2? (<td>URL</td>) 
