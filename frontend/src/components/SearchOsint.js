@@ -7,19 +7,14 @@ import reducer from '../reducers'
 
 function SearchOsint() {
 
-  const [state, dispatch] = useReducer(reducer, [])
+  const [state, dispatch] = useReducer(reducer)
   const [osint, setOsint] = useState('')
   const [type, setType] = useState('')
   
   const searchOsint = e => {
     e.preventDefault() 
-    dispatch({
-      type: 'SEARCH_OSINT',
-      osint,
-      type
-    })
-    console.log(state)
-    // console.log({osint, type})
+    dispatch({ type: 'SEARCH_OSINT', osint, type }) 
+    console.log(osint, type, state)
   }
 
   return (
