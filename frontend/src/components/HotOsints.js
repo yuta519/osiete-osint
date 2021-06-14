@@ -3,13 +3,15 @@ import React, { useEffect, useState } from 'react'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import axios from 'axios'
 
-
 function HotOsints() {
   const [osints, setOsints] = useState([])
   
-  useEffect(async () => {
-    const response = await axios.get('http://localhost:8000/api/dangerous_osint/')
-    setOsints(response.data)
+  useEffect(() => {
+    const fetch_osints = async () => {
+      const response = await axios.get('http://localhost:8000/api/dangerous_osint/')
+      setOsints(response.data)
+    }
+    fetch_osints()
   }, [])
 
   return (
