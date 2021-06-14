@@ -1,5 +1,6 @@
 import React, { useReducer, useState } from 'react'
 
+import axios from 'axios'
 import 'bootstrap/dist/css/bootstrap.min.css'
 
 import reducer from '../reducers'
@@ -7,15 +8,24 @@ import reducer from '../reducers'
 
 function SearchOsint() {
 
-  const [state, dispatch] = useReducer(reducer, [])
+  // const [state, dispatch] = useReducer(reducer, [])
+  const [state] = useReducer(reducer, [])
   const [osint, setOsint] = useState('')
   const [type, setType] = useState('')
+  const [res, setRes] = useState('')
   
   const searchOsint = e => {
-    // e.prevetDefault()
-    console.log("search")
-    console.log({osint, type})
-    dispatch({type: 'SEARCH_OSINT', osint, type})
+    e.preventDefault()
+    console.log({osint, type, state})
+    // dispatch({type: 'SEARCH_OSINT', osint, type})
+    const search_osint = async() => {
+      const response = await axios.post('http://localhost:8000/osints/api', {
+        data_id: osint,
+      })
+      setRes(response.data) 
+    }
+    search_osint()
+    console.log(res)
   }
 
   return (
@@ -36,22 +46,35 @@ function SearchOsint() {
             <option value="3">File Hash</option>
           </select>
         </div>
-        <button className="btn btn-primary" onClick={ searchOsint }>search</button>
+        <button className="btn btn-primary" style={{ "margin-top": "20px" }} onClick={ searchOsint }>search</button>
       </form>
 
-      {/* <h4>OSINT Result</h4>
-      <table className="table table-hover table-striped">
-        <thead>
-          <th>No</th>
-          <th>OSINT</th>
-          <th>Type</th>
-          <th>Risk</th>
-          <th>Last Updated</th>
-        </thead>
-        <tbody>
-        </tbody>
-      </table> */}
-      
+      { res ? (
+        <div style={{ "margin-top": "50px" }}>
+          <h4>OSINT Result</h4>
+          <table className="table table-hover table-striped">
+            <thead>
+              <tr>
+                <th>OSINT</th>
+                <th>VirusTotal URL</th>
+                <th>Risk</th>
+                <th>Owner</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th>{res.data_id}</th>
+                <th><a href={res.gui}>{res.gui}</a></th>
+                <th>{res.malicious_level === 1? 'Dangerous' 
+                    :res.malicious_level === 2? 'Suspicious'
+                    :res.malicious_level === 3? 'Safe'
+                    : 'Unknown' }</th>
+                <th>{res.owner}</th>
+              </tr>
+            </tbody>
+          </table>
+        </div>)
+      :(<div></div>)}
     </div>
   )
 }
