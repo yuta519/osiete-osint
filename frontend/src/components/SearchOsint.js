@@ -30,7 +30,6 @@ function SearchOsint() {
 
   return (
     <div className='container'>
-
       <h4>Search OSINT</h4>
       <form>
         <div className="form-group">
@@ -48,7 +47,6 @@ function SearchOsint() {
         </div>
         <button className="btn btn-primary" style={{ "margin-top": "20px" }} onClick={ searchOsint }>search</button>
       </form>
-
       { res ? (
         <div style={{ "margin-top": "50px" }}>
           <h4>OSINT Result</h4>
