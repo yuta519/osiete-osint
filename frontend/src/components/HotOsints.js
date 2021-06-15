@@ -8,7 +8,7 @@ function HotOsints() {
   
   useEffect(() => {
     const fetch_osints = async () => {
-      const response = await axios.get('http://localhost:8000/api/dangerous_osint/')
+      const response = await axios.get('http://localhost:8000/api/v1/serious_osints/')
       setOsints(response.data)
     }
     fetch_osints()
@@ -29,7 +29,7 @@ function HotOsints() {
         <tbody>
           { osints.map((osint, index) => (
             <tr key={index}>
-              <td><a href={"osint/"+osint.data_id}>{osint.data_id}</a></td>
+              <td><a href={"osint/"+osint.analyzing_type+"/"+osint.data_id}>{osint.data_id}</a></td>
               { osint.analyzing_type === 1? (<td>IP Address</td>) 
               : osint.analyzing_type === 2? (<td>URL</td>) 
               : osint.analyzing_type === 3? (<td>File Hash</td>) 
