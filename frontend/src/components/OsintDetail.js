@@ -7,7 +7,7 @@ function OsintDetail() {
   const current_url = window.location.href
   const result = current_url.match(/http:\/\/.*osint\/(.*)\/(.*)/) 
 
-  console.log(result[1])
+  console.log(result)
 
   useEffect(()=>{
     if (result[1] === '1') {
