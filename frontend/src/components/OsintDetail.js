@@ -1,16 +1,32 @@
-import React from 'react'
-import { useLocation } from 'react-router-dom'
+import React, { useEffect, useState } from 'react'
 
 function OsintDetail() {
-  const location = useLocation();
-  // const typepath_pattern = '/^osint//(d)//(.*)/g'
-  const result = location['pathname'].match(/osint\/(d)\//) 
-  // const osintpath_pattern = ''
-  console.log(location)
-  console.log(result)
+  const [type, setType] = useState([])
+  const [osint, setOsint] = useState([])
+
+  const current_url = window.location.href
+  const result = current_url.match(/http:\/\/.*osint\/(.*)\/(.*)/) 
+
+  console.log(result[1])
+
+  useEffect(()=>{
+    if (result[1] === '1') {
+      setType('IP Address')
+    } else if (result[1] === 2) {
+      setType('Domain')
+    } else if (result[1] === 3) {
+      setType('File Hash')
+    } else {
+      setType('Unknown')
+    } 
+    setOsint(result[2])
+  }, [])
+
   return (
     <>
       <h4>OSINT</h4>
+      <div>{ type }</div>
+      <div>{ osint }</div>
     </>
   )
 }
