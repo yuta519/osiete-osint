@@ -23,11 +23,11 @@ function OsintDetail() {
   }, [])
 
   return (
-    <>
+    <div className='container'>
       <h4>OSINT</h4>
       <div>{ type }</div>
       <div>{ osint }</div>
-    </>
+    </div>
   )
 }
 
