@@ -19,7 +19,6 @@ function SearchOsint() {
     console.log({osint, type, state})
     // dispatch({type: 'SEARCH_OSINT', osint, type})
     const search_osint = async() => {
-      // const response = await axios.post('http://localhost:8000/osints/api', {
       const response = await axios.post('http://localhost:8000/api/v1/osint', {
         data_id: osint,
       })
