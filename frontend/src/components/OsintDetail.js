@@ -34,19 +34,6 @@ function OsintDetail() {
     search_osint()
   }, [osint])
 
-  // if (result[1] === 2) {
-  //   useEffect(() => {
-  //     const fetch_uscan = async() => {
-  //       const response = await axios.post('http://localhost:8000/api/v1/urlcan_osint', {
-  //         osint_id: osint 
-  //       })
-  //       console.log(response)
-  //       setUscanInfo(response)
-  //     }
-  //     fetch_uscan()
-  //   }, [])
-  // }
-
   return (
     <div className='container' style={{ "margin": "50px" }}>
       <div className="card " style={{ "margin": "10px" }}>
