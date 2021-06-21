@@ -5,6 +5,7 @@ import axios from 'axios'
 
 function HotOsints() {
   const [osints, setOsints] = useState([])
+  const urlpattern = /^https?:\/{2,}(.*?)(?:\/|\?|#|$)/
   
   useEffect(() => {
     const fetch_osints = async () => {
@@ -29,7 +30,11 @@ function HotOsints() {
         <tbody>
           { osints.map((osint, index) => (
             <tr key={index}>
-              <td><a href={"osint/"+osint.analyzing_type+"/"+osint.data_id}>{osint.data_id}</a></td>
+              <td><a href={ 
+                osint.analyzing_type === 2? 
+                  "osint/"+osint.analyzing_type+"/"+osint.data_id.match(urlpattern)[1]
+                : osint.data_id }>{osint.data_id}</a></td> 
+              {/* <td><a href={"osint/"+osint.analyzing_type+"/"+data_id}>{osint.data_id}</a></td> */}
               { osint.analyzing_type === 1? (<td>IP Address</td>) 
               : osint.analyzing_type === 2? (<td>URL</td>) 
               : osint.analyzing_type === 3? (<td>File Hash</td>) 
