@@ -1,23 +1,17 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 
+import { UrlscanDetail } from './UrlscanDetail'
+
 function OsintDetail() {
   const [type, setType] = useState([])
-  const [osint, setOsint] = useState([])
   const [osint_info, setOsintInfo] = useState([])
 
   const current_url = window.location.href
   const result = current_url.match(/http:\/\/.*osint\/(.*)\/(.*)/) 
-
-  const search_osint = async() => {
-    const res = await axios.post('http://localhost:8000/api/v1/osint', {
-      data_id: result[2],
-    })
-    console.log(res.data)
-    setOsintInfo(res.data)
-  }
-
-  useEffect(()=>{
+  const osint = result[2]
+  
+  useEffect(() => {
     if (result[1] === '1') {
       setType('IP Address')
     } else if (result[1] === 2) {
@@ -27,18 +21,26 @@ function OsintDetail() {
     } else {
       setType('Unknown')
     } 
-    setOsint(result[2])
+  }, [result])
+
+  useEffect(() => {
+    const search_osint = async() => {
+      const response = await axios.post('http://localhost:8000/api/v1/osint', {
+        data_id: osint,
+      })
+      console.log(response.data)
+      setOsintInfo(response.data)
+    }
     search_osint()
-  }, [])
+  }, [osint])
 
   return (
     <div className='container' style={{ "margin": "50px" }}>
-      
       <div className="card " style={{ "margin": "10px" }}>
         <div className="card-header">
           <ul className="nav nav-tabs card-header-tabs">
             <li className="nav-item">
-              <a className="nav-link active" href="">Summary Report</a>
+              {/* <a className="nav-link active" href="">Summary Report</a> */}
             </li>
             {/* <li className="nav-item">
               <a className="nav-link" href="#">Link</a>
@@ -59,7 +61,9 @@ function OsintDetail() {
               </tr>
               <tr>
                 <td><b>RISK</b></td>
-                <td>{ osint_info['malicious_level'] }</td>
+                <td>{ 
+                      osint_info['malicious_level'] 
+                 }</td>
               </tr>
               <tr>
                 <td><b>OWNER</b></td>
@@ -112,26 +116,8 @@ function OsintDetail() {
             <small class="text-muted">Last updated 3 mins ago</small>
           </div>
         </div>
-        <div className="card">
-          <svg class="bd-placeholder-img card-img-top" width="100%" height="180" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: Image cap"><title>Placeholder</title><rect fill="#868e96" width="100%" height="100%"/><text fill="#dee2e6" dy=".3em" x="50%" y="50%">Image cap</text></svg>
-          <div class="card-body">
-            <h5 class="card-title">Card title</h5>
-            <p class="card-text">This card has supporting text below as a natural lead-in to additional content.</p>
-          </div>
-          <div class="card-footer">
-            <small class="text-muted">Last updated 3 mins ago</small>
-          </div>
-        </div>
-        <div class="card">
-          <svg class="bd-placeholder-img card-img-top" width="100%" height="180" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: Image cap"><title>Placeholder</title><rect fill="#868e96" width="100%" height="100%"/><text fill="#dee2e6" dy=".3em" x="50%" y="50%">Image cap</text></svg>
-          <div class="card-body">
-            <h5 class="card-title">Card title</h5>
-            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This card has even longer content than the first to show that equal height action.</p>
-          </div>
-          <div class="card-footer">
-            <small class="text-muted">Last updated 3 mins ago</small>
-          </div>
-        </div>
+        <UrlscanDetail osint={osint}/>
+        <UrlscanDetail osint={osint}/>
       </div>
 
     </div>

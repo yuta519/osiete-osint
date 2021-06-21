@@ -13,17 +13,27 @@ function SearchOsint() {
   const [osint, setOsint] = useState('')
   const [type, setType] = useState('')
   const [res, setRes] = useState('')
-  
+  const [err, setErr] = useState('')
+  const urlpattern = /^https?:\/{2,}(.*?)(?:\/|\?|#|$)/
+
   const searchOsint = e => {
     e.preventDefault()
     console.log({osint, type, state})
+    if (osint.match(urlpattern)) {
+      setOsint(osint.match(urlpattern)[1])
+    }
     // dispatch({type: 'SEARCH_OSINT', osint, type})
     const search_osint = async() => {
-      // const response = await axios.post('http://localhost:8000/osints/api', {
       const response = await axios.post('http://localhost:8000/api/v1/osint', {
-        data_id: osint,
+        data_id: osint, analyzing_type: type,
+      }).catch((error) =>{
+        setErr(error)
+        console.log(err)
       })
-      setRes(response.data) 
+      if (response) {
+        setRes(response.data) 
+        setErr('')
+      }
     }
     search_osint()
     console.log(res)
@@ -48,7 +58,8 @@ function SearchOsint() {
         </div>
         <button className="btn btn-primary" style={{ "margin-top": "20px" }} onClick={ searchOsint }>search</button>
       </form>
-      { res ? (
+      { err ? (<h4>This OSINT is not investigated.</h4>)
+        :res ? (
         <div style={{ "margin-top": "50px" }}>
           <h4>OSINT Result</h4>
           <table className="table table-hover table-striped">
