@@ -4,13 +4,13 @@ import React, { useEffect, useState } from 'react'
 export const UrlscanDetail = (osint) => {
 
   const [usosint, setUsosint] = useState([])
+
   useEffect(() => {
     const fetch_uscan = async() => {
-      const response = await axios.post('http://localhost:8000/api/v1/urlscan_osint',{
+      const response = await axios.post('http://localhost:8000/api/v1/urlscan',{
         domain: osint['osint']
       })
       setUsosint(response.data[0])
-      console.log(response)
     } 
     fetch_uscan()
   },[])
@@ -19,9 +19,9 @@ export const UrlscanDetail = (osint) => {
     <>
     { usosint ? (
       <div className="card">
-        <div class="card-body">
-          <h5 class="card-title">Urlscan.io information</h5>
-          <p class="card-text">To additional content. This content is a little bit longer.
+        <div className="card-body">
+          <h5 className="card-title">Urlscan.io information</h5>
+          <p className="card-text">To additional content. This content is a little bit longer.</p>
             <table className="table">
               <thead>
                 <tr>
@@ -61,8 +61,7 @@ export const UrlscanDetail = (osint) => {
               </tbody>
             </table> 
             <img src={usosint.screenshot} className="center-block" style={{ 
-              "display": "block", "height": "auto", "max-width": "100%" }}/>
-          </p>
+              "display": "block", "height": "auto", maxWidth: "100%" }}/>
         </div>
       </div>)
     :(<></>)}
