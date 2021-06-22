@@ -2,6 +2,7 @@ import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 
 import { UrlscanDetail } from './UrlscanDetail'
+import { VirusTotalDetail } from './VirusTotalDetail'
 
 function OsintDetail() {
   const [type, setType] = useState([])
@@ -81,7 +82,7 @@ function OsintDetail() {
         </div>
       </div>
       <div className="card-group" style={{ "margin": "10px" }}>
-        <UrlscanDetail osint={osint}/>
+        <VirusTotalDetail osint={osint}/>
         <UrlscanDetail osint={osint}/>
         <UrlscanDetail osint={osint}/>
       </div>
