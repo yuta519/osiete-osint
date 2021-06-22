@@ -31,8 +31,12 @@ export const UrlscanDetail = (osint) => {
               </thead>
               <tbody>
                 <tr>
-                  <td>Date</td>
+                  <td>Updated Date</td>
                   <td>{ usosint.date }</td>
+                </tr>
+                <tr>
+                  <td>Domain</td>
+                  <td>{ usosint.domain }</td>
                 </tr>
                 <tr>
                   <td>Primary IP</td>
