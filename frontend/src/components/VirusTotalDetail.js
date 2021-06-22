@@ -22,7 +22,7 @@ export const VirusTotalDetail = (osint) => {
         <div className="card">
           <div className="card-body">
             <h5 className="card-title">VirusTotal Summary information</h5>
-            <p className="card-text">To additional content. This content is a little bit longer.</p>
+            {/* <p className="card-text">To additional content. This content is a little bit longer.</p> */}
               <table className="table">
                 <thead>
                   <tr>
