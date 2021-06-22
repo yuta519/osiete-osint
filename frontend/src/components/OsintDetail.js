@@ -2,9 +2,11 @@ import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 
 import { UrlscanDetail } from './UrlscanDetail'
+import { VirusTotalDetail } from './VirusTotalDetail'
 
 function OsintDetail() {
   const [type, setType] = useState([])
+  const [risk, setRisk] = useState("")
   const [osint_info, setOsintInfo] = useState([])
 
   const current_url = window.location.href
@@ -14,9 +16,9 @@ function OsintDetail() {
   useEffect(() => {
     if (result[1] === '1') {
       setType('IP Address')
-    } else if (result[1] === 2) {
+    } else if (result[1] === '2') {
       setType('Domain')
-    } else if (result[1] === 3) {
+    } else if (result[1] === '3') {
       setType('File Hash')
     } else {
       setType('Unknown')
@@ -28,14 +30,22 @@ function OsintDetail() {
       const response = await axios.post('http://localhost:8000/api/v1/osint', {
         data_id: osint,
       })
-      console.log(response.data)
       setOsintInfo(response.data)
+      if (response.data["malicious_level"] === 1) {
+        setRisk("Malicious")
+      } else if (response.data["malicious_level"] === 2) {
+        setRisk("Suspicious")
+      } else if (response.data["malicious_level"] === 3) {
+        setRisk("Safe")
+      } else {
+        setRisk("Unknown")
+      }
     }
-    search_osint()
+    search_osint(osint_info['malicious_level'])
   }, [osint])
 
   return (
-    <div className='container' style={{ "margin": "50px" }}>
+    <div className='container'>
       <div className="card " style={{ "margin": "10px" }}>
         <div className="card-header">
           <ul className="nav nav-tabs card-header-tabs">
@@ -51,8 +61,8 @@ function OsintDetail() {
           </ul>
         </div>
         <div className="card-body">
-          <h3 className="card-title">{ osint }</h3>
-          <p className="card-text"> natural lead-in to additional content.</p>
+          <h2 className="card-title">{ osint }</h2>
+          {/* <p className="card-text"> natural lead-in to additional content.</p> */}
           <table className="table">
             <tbody>
               <tr>
@@ -61,9 +71,7 @@ function OsintDetail() {
               </tr>
               <tr>
                 <td><b>RISK</b></td>
-                <td>{ 
-                      osint_info['malicious_level'] 
-                 }</td>
+                <td>{ risk }</td>
               </tr>
               <tr>
                 <td><b>OWNER</b></td>
@@ -71,51 +79,10 @@ function OsintDetail() {
               </tr>
             </tbody>
           </table>
-
         </div>
       </div>
       <div className="card-group" style={{ "margin": "10px" }}>
-        <div className="card">
-          <svg class="bd-placeholder-img card-img-top" width="100%" height="180" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: Image cap"><title>Placeholder</title><rect fill="#868e96" width="100%" height="100%"/><text fill="#dee2e6" dy=".3em" x="50%" y="50%">Image cap</text></svg>
-          <div class="card-body">
-            <h5 class="card-title">Card title</h5>
-            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.
-            <table className="table">
-            <thead>
-              <tr>
-                <th>Name</th>
-                <th>ID No.</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>Samso Park</td>
-                <td>34424433</td>
-              </tr>
-              <tr>
-                <td>Marlo Sanki</td>
-                <td>53425532</td>
-              </tr>
-              <tr>
-                <td>John ryte</td>
-                <td>53275533</td>
-              </tr>
-              <tr>
-                <td>Peter mark</td>
-                <td>53275534</td>
-              </tr>
-              <tr>
-                <td>Dave</td>
-                <td>53275535</td>
-              </tr>
-            </tbody>
-          </table> 
-            </p>
-          </div>
-          <div className="card-footer">
-            <small class="text-muted">Last updated 3 mins ago</small>
-          </div>
-        </div>
+        <VirusTotalDetail osint={osint}/>
         <UrlscanDetail osint={osint}/>
         <UrlscanDetail osint={osint}/>
       </div>

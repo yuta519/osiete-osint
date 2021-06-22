@@ -13,7 +13,7 @@ function Header() {
         </a>
         </div>
       </nav>
-      <ul className="nav justify-content-end" style={{'margin-top': '30px'}}>
+      <ul className="nav justify-content-end" style={{'marginTop': '30px'}}>
         <li className="nav-item">
           <a className="nav-link active" aria-current="page" href="/">Hot OSINTs</a>
         </li>
