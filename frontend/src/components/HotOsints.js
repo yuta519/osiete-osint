@@ -22,7 +22,6 @@ function HotOsints() {
           <tr>
             <th>OSINT</th>
             <th>Type</th>
-            <th>Risk</th>
             <th>Last Updated</th>
           </tr>
         </thead>
@@ -31,13 +30,13 @@ function HotOsints() {
             <tr key={index}>
               <td><a href={"osint/"+osint.analyzing_type+"/"+osint.data_id}>{osint.data_id}</a></td>
               { osint.analyzing_type === 1? (<td>IP Address</td>) 
-              : osint.analyzing_type === 2? (<td>URL</td>) 
+              : osint.analyzing_type === 2? (<td>Domain</td>) 
               : osint.analyzing_type === 3? (<td>File Hash</td>) 
               : (<td></td>) }
-              { osint.malicious_level === 1? (<td>MALICIOUS</td>)
+              {/* { osint.malicious_level === 1? (<td>MALICIOUS</td>)
               : osint.malicious_level === 2? (<td>SUSPICIOUS</td>) 
               : osint.malicious_level === 3? (<td>SAFE</td>) 
-              : (<td></td>) }
+              : (<td></td>) } */}
               <td>{osint.last_analyzed}</td>
             </tr>
           ))}
