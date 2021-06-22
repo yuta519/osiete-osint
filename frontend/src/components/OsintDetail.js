@@ -5,6 +5,7 @@ import { UrlscanDetail } from './UrlscanDetail'
 
 function OsintDetail() {
   const [type, setType] = useState([])
+  const [risk, setRisk] = useState("")
   const [osint_info, setOsintInfo] = useState([])
 
   const current_url = window.location.href
@@ -28,10 +29,18 @@ function OsintDetail() {
       const response = await axios.post('http://localhost:8000/api/v1/osint', {
         data_id: osint,
       })
-      console.log(response.data)
       setOsintInfo(response.data)
+      if (response.data["malicious_level"] === 1) {
+        setRisk("Malicious")
+      } else if (response.data["malicious_level"] === 2) {
+        setRisk("Suspicious")
+      } else if (response.data["malicious_level"] === 3) {
+        setRisk("Safe")
+      } else {
+        setRisk("Unknown")
+      }
     }
-    search_osint()
+    search_osint(osint_info['malicious_level'])
   }, [osint])
 
   return (
@@ -61,7 +70,7 @@ function OsintDetail() {
               </tr>
               <tr>
                 <td><b>RISK</b></td>
-                <td>{ osint_info['malicious_level'] }</td>
+                <td>{ risk }</td>
               </tr>
               <tr>
                 <td><b>OWNER</b></td>
@@ -69,10 +78,10 @@ function OsintDetail() {
               </tr>
             </tbody>
           </table>
-
         </div>
       </div>
       <div className="card-group" style={{ "margin": "10px" }}>
+        <UrlscanDetail osint={osint}/>
         <UrlscanDetail osint={osint}/>
         <UrlscanDetail osint={osint}/>
       </div>
