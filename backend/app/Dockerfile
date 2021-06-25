@@ -18,3 +18,4 @@ RUN pip install --upgrade pip \
 COPY ./Pipfile /usr/src/app/Pipfile
 RUN pipenv install --skip-lock --system --dev
 COPY . /usr/src/app/
+ENTRYPOINT ["/usr/src/app/entrypoint.sh"]
