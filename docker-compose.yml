@@ -1,0 +1,36 @@
+version: '3.9'
+
+services:
+    django:
+        build: ./backend
+        command: python manage.py runserver 0.0.0.0:8000
+        volumes:
+            - ./backend/:/usr/src/app/
+        ports:
+            - 8090:8000
+        # environmental variables
+        environment:
+            # 1 is debug mode
+            - DEBUG=1
+            # - SECRET_KEY='django-insecure-!)+bp)dx6c0c-+jhq)%z(#yjw$zmjs6y+5dc!0v+06o2o3bz(x'
+            - DATABASE_ENGINE=django.db.backends.postgresql
+            - DATABASE_DB=django_db
+            - DATABASE_USER=django_db_user
+            - DATABASE_PASSWORD=password1234
+            - DATABASE_HOST=postgres
+            - DATABASE_PORT=5432
+        # services to connect
+        depends_on:
+            - postgres
+        
+    postgres:
+        image: postgres:11.4-alpine
+        volumes:
+            - postgres_data:/var/lib/postgresql/data
+        environment:
+            - POSTGRES_USER=django_db_user
+            - POSTGRES_PASSWORD=password1234
+            - POSTGRES_DB=django_db
+
+volumes:
+    postgres_data:
