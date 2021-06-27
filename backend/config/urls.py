@@ -21,5 +21,11 @@ from apps.osiete_osint import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.top_page),
-    path('api/v1', views.osint_list),
+    path('api/v1/osints', views.osint_list),
+    path('api/v1/osints/malicious', views.osint_list),
+    path('api/v1/osints/suspicious', views.osint_list),
+    path('api/v1/osints/safe', views.osint_list),
+    path('api/v1/vt/summary', views.api_vtsummary),
+    path('api/v1/vt/comments', views.api_urlscan),
+    path('api/v1/us', views.api_urlscan),
 ]
