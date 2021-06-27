@@ -14,6 +14,6 @@ fi
 python manage.py flush --no-input
 python manage.py makemigrations
 python manage.py migrate
-python manage.py loaddata app/service/fixture/service.json
+python manage.py loaddata apps/osiete_osint/fixtures/service.json 
 
 exec "$@"

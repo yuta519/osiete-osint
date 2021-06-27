@@ -1,11 +1,12 @@
 from django.contrib import admin
 
-from .models import (DataList, OsintSearchHistory, Service, UrlScan,
+from .models import (OsintList,OsintSearchHistory, Service, UrlScan,
                     VtComments, VtSummary,)
+                    
 
 # Register your models here.
 
-admin.site.register(DataList)
+admin.site.register(OsintList)
 admin.site.register(OsintSearchHistory)
 admin.site.register(Service)
 admin.site.register(UrlScan)

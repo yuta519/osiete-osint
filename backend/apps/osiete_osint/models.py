@@ -1,4 +1,3 @@
-from re import T
 from django.db import models
 from django.db.models.fields import CharField
 
@@ -22,7 +21,7 @@ class Service(models.Model):
         return self.name
 
 
-class DataList(models.Model):
+class OsintList(models.Model):
 
     INVALID, IP, DOM, HASH = 0, 1, 2, 3
     ACT, ER, RUN = 1, 2, 3
@@ -33,18 +32,18 @@ class DataList(models.Model):
     ANALYSIS_STATUS = ((UNKNOWN, 'UNKNOWN'), (MAL, 'MALICIOUS'), 
                         (SUS, 'SUSPICIOUS'),(SA, 'SAFE'))
     
-    data_id = CharField(max_length=100, unique=True, null=False)
-    analyzing_type = models.IntegerField(null=True, choices=SPECIMEN_CHOICES)
-    last_analyzed = models.DateTimeField(auto_now=True)
+    osint_id = CharField(max_length=100, unique=True, null=False)
+    osint_type = models.IntegerField(null=True, choices=SPECIMEN_CHOICES)
+    updated_at = models.DateTimeField(auto_now=True)
     malicious_level = models.IntegerField(null=True, choices=ANALYSIS_STATUS)
 
     class Meta:
-        verbose_name = 'OSINT Data'
-        verbose_name_plural = 'OSINT Data List'
-        ordering = ('data_id',)
+        verbose_name = 'OSINT'
+        verbose_name_plural = 'OSINT List'
+        ordering = ('osint_id',)
     
     def __str__(self) -> str:
-        return self.data_id
+        return self.osint_id
 
 
 class VtSummary(models.Model):
@@ -52,7 +51,7 @@ class VtSummary(models.Model):
     ANALYSIS_STATUS = ((UNKNOWN, 'UNKNOWN'), (MAL, 'MALICIOUS'), 
                         (SUS, 'SUSPICIOUS'),(SA, 'SAFE'))
 
-    osint_id = models.ForeignKey('DataList', on_delete=models.CASCADE)
+    osint_id = models.ForeignKey('OsintList', on_delete=models.CASCADE)
     owner = CharField(max_length=100, null=True)
     gui_url = models.URLField(null=True, unique=True)
     malicious_level = models.IntegerField(null=True, choices=ANALYSIS_STATUS)
@@ -61,7 +60,7 @@ class VtSummary(models.Model):
     indexed_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
-        verbose_name = 'OSINT Data'
+        verbose_name = 'OSINT'
         verbose_name_plural = 'VirusTotal Summary'
         ordering = ('osint_id',)
 
@@ -88,7 +87,7 @@ class VtComments(models.Model):
 
 class UrlScan(models.Model):
 
-    osint_id = models.ForeignKey('DataList', on_delete=models.CASCADE )
+    osint_id = models.ForeignKey('OsintList', on_delete=models.CASCADE )
     date = models.DateField()
     domain = CharField(max_length=100, unique=True)
     primary_ip = CharField(max_length=20, null=True)
@@ -109,7 +108,7 @@ class UrlScan(models.Model):
 
 class OsintSearchHistory(models.Model):
 
-    osint_id = models.ForeignKey('DataList', on_delete=models.CASCADE)
+    osint_id = models.ForeignKey('OsintList', on_delete=models.CASCADE)
     date = models.DateTimeField(null=False, blank=False)
     from_ip = models.CharField(verbose_name='from ipaddr', max_length=16)
     

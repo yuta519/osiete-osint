@@ -2,9 +2,9 @@ from datetime import datetime, timedelta
 from django.core.management.base import BaseCommand
 from django.utils import timezone
 
-from app.service.client import UrlScanClient, VirusTotalClient 
-from app.service.models import DataList
-
+from apps.osiete_osint.lib.Urlscan import UrlScanClient 
+from apps.osiete_osint.lib.VirusTotal import VirusTotalClient 
+from apps.osiete_osint.models import OsintList 
 
 
 class Command(BaseCommand):
@@ -22,15 +22,16 @@ class Command(BaseCommand):
         time_threshold = datetime.now() - timedelta(minutes=2)
         # time_threshold = datetime.now() - timedelta(days=3)
         time_threshold = timezone.make_aware(time_threshold)
-        all_osints = DataList.objects.filter(last_analyzed__lt=time_threshold)
+        all_osints = OsintList.objects.filter(updated_at__lt=time_threshold)
+        print('All Osints:', all_osints)
         for osint in all_osints:
             try:
                 print('threshold', time_threshold)
-                print(osint, osint.last_analyzed)
+                print(osint, osint.updated_at)
                 self.update_osint_of_vt(osint)
                 self.update_osint_of_us(osint)
-                osint.last_analyzed = timezone.now()
+                osint.updated_at = timezone.now()
                 osint.save()
-            except KeyError:
+            except:
                 print('Got Restriction of VT API:', osint)
                 self.update_osint_of_us(osint)
