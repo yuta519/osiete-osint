@@ -75,7 +75,6 @@ def api_vtsummary(request):
     List all OSINTs, or create a new OSINT.
     This method is used by React Frontend(osiete osint react).
     """
-    # vt = VirusTotalClient()
     if request.method == 'GET':
         vtsum = VtSummary.objects.all()
         serializer = VtSummarySerializer(vtsum, many=True)
