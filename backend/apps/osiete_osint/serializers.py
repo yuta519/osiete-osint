@@ -14,6 +14,7 @@ class OsintListSerializer(serializers.ModelSerializer):
         model = OsintList
         fields = ('osint_id', 'osint_type', 'updated_at', 'malicious_level')
 
+
 class UrlScanSerializer(serializers.ModelSerializer):
     class Meta:
         model = UrlScan
