@@ -27,7 +27,7 @@ function OsintDetail() {
 
   useEffect(() => {
     const search_osint = async() => {
-      const response = await axios.post('http://localhost:8000/api/v1/osint', {
+      const response = await axios.post('http://localhost:8000/api/v1/osints', {
         data_id: osint,
       })
       setOsintInfo(response.data)

@@ -7,7 +7,7 @@ export const UrlscanDetail = (osint) => {
 
   useEffect(() => {
     const fetch_uscan = async() => {
-      const response = await axios.post('http://localhost:8000/api/v1/urlscan',{
+      const response = await axios.post('http://localhost:8000/api/v1/us',{
         domain: osint['osint']
       })
       setUsosint(response.data[0])
