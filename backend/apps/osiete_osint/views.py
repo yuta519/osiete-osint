@@ -38,9 +38,7 @@ def osint_list(request):
                 return HttpResponse(vtsum_json, status=201)
             except:
                 message = f'{req["osint_id"]} is not updated yet'
-                print(message)
                 return JsonResponse(message, status=202)
-                # raise RuntimeError(message)
         else:
             serializer = OsintListSerializer(data=req)
             if serializer.is_valid():
