@@ -93,3 +93,7 @@ def api_vtsummary(request):
                 serializer.save()
             return JsonResponse(serializer.errors, status=400)
 
+
+@csrf_exempt
+def api_vtcomments(request):
+    pass
