@@ -5,7 +5,7 @@ from django.utils import timezone
 import requests
 
 from apps.osiete_osint.lib.base import AbstractBaseClient
-from apps.osiete_osint.models import OsintList, Service, VtSummary
+from apps.osiete_osint.models import OsintList, Service, VtComments, VtSummary
 
 logger = logging.getLogger(__name__)
 
@@ -141,6 +141,11 @@ class VirusTotalClient(AbstractBaseClient):
             VtSummary.objects.update_or_create(gui_url=vt_result['gui'],
                             osint_id=osint_data, owner=vt_result['owner'],
                             malicious_level=vt_result['malicious_level'])
+            vtsum = VtSummary(osint_id=osint_data)
+            for comment in vt_result['comments']:
+                VtComments.objects.update_or_create(comment=comment, 
+                                                    vt_summary=vtsum)
+                print(comment)
             print('VirusTotal information is updated.')
             time.sleep(15)
         except:
