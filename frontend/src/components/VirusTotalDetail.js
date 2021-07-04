@@ -8,7 +8,7 @@ export const VirusTotalDetail = (osint) => {
   
   useEffect(() => {
     const fetch_vtsummary = async() => {
-      const response = await axios.post("http://localhost:8000/api/v1/vtsummary",{
+      const response = await axios.post("http://localhost:8000/api/v1/vt/summary",{
         data_id: osint['osint']
       })
       setVtosint(response.data)
