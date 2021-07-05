@@ -60,3 +60,5 @@ class UrlScanClient(AbstractBaseClient):
                     print('Urlscan information is updated.')
                 except IntegrityError:
                     pass
+                # except Exception as e:
+                #     print(e)
