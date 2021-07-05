@@ -71,18 +71,20 @@ class VtSummary(models.Model):
 
 class VtComments(models.Model):
 
-    vt_summary = models.ForeignKey('VtSummary', on_delete=models.CASCADE)
+    # vt_summary = models.ForeignKey('VtSummary', on_delete=models.CASCADE)
+    osint_id = models.ForeignKey('OsintList', on_delete=models.CASCADE)
     date = CharField(max_length=100, null=True)
     comment = CharField(max_length=1000, null=True)
 
     class Meta:
         verbose_name = 'OSINT'
         verbose_name_plural = 'VirusTotal Comments'
-        ordering = ('vt_summary',)
+        ordering = ('osint_id',)
+        # ordering = ('vt_summary',)
 
     def __str__(self) -> str:
-        str_vt_summary = str(self.vt_summary)
-        return str_vt_summary
+        str_osint_id = str(self.osint_id)
+        return str_osint_id
 
 
 class UrlScan(models.Model):
