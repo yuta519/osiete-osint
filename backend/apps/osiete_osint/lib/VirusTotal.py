@@ -5,7 +5,7 @@ from django.utils import timezone
 import requests
 
 from apps.osiete_osint.lib.base import AbstractBaseClient
-from apps.osiete_osint.models import OsintList, Service, VtSummary
+from apps.osiete_osint.models import OsintList, Service, VtComments, VtSummary
 
 logger = logging.getLogger(__name__)
 
@@ -20,15 +20,17 @@ class VirusTotalClient(AbstractBaseClient):
 
     # TODO: Change method name
     # TODO: Using vt.py for handling IP, Domain, URL
-    def fetch_vt_risk(self, osint) -> dict:
+    def fetch_vt_risk(self, osint, osint_type) -> dict:
         """ """
-        osint_type = self.judge_osint_type(osint)
+        # osint_type = self.judge_osint_type(osint)
         if osint_type == 1:
             return self.get_vt_ipaddress(osint)
         elif osint_type == 2:
             return self.get_vt_domain(osint)
         elif osint_type == 3:
             return self.get_vt_hash(osint)
+        else:
+            raise RuntimeError('Error: {osint} is not setted a type')
 
     def request(self, endpoint) -> dict:
         response = requests.get(endpoint, headers=self.headers).json()
@@ -42,6 +44,8 @@ class VirusTotalClient(AbstractBaseClient):
                     # self.request(f'{base}{ip}/resolution')
                     ]
         # TODO@yuta create historical and resolution
+        if response[0]['error'] or response[0]['error']:
+            raise RuntimeError('Error: exceeded VirusTotal API restriction')
         result = self.parse_summary_ipaddress(response[0])
         result['comments'] = self.parse_comments_of_ipaddress(response[1])
         return result
@@ -135,13 +139,21 @@ class VirusTotalClient(AbstractBaseClient):
 
     def update_vtrisk(self, osint):
         try:
-            vt_result = self.fetch_vt_risk(osint.osint_id)
+            vt_result = self.fetch_vt_risk(osint.osint_id, osint.osint_type)
             print(vt_result)
             osint_data = OsintList.objects.get(osint_id=osint.osint_id)
             VtSummary.objects.update_or_create(gui_url=vt_result['gui'],
                             osint_id=osint_data, owner=vt_result['owner'],
                             malicious_level=vt_result['malicious_level'])
+            for comment in vt_result['comments']:
+                try:
+                    VtComments.objects.update_or_create(osint_id=osint_data, 
+                                                        comment=comment)
+                except:
+                    print('Could not insert data')
             print('VirusTotal information is updated.')
             time.sleep(15)
-        except:
+        except BaseException as e:
+            print(e)
+            print('Something went wrong')
             pass
