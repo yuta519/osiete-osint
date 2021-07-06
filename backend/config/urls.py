@@ -26,6 +26,6 @@ urlpatterns = [
     path('api/v1/osints/suspicious', views.osint_list),
     path('api/v1/osints/safe', views.osint_list),
     path('api/v1/vt/summary', views.api_vtsummary),
-    path('api/v1/vt/comments', views.api_urlscan),
+    path('api/v1/vt/comments', views.api_vtcomments),
     path('api/v1/us', views.api_urlscan),
 ]
