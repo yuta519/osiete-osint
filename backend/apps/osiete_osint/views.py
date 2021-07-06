@@ -4,19 +4,19 @@ from django.http import HttpResponse, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.parsers import JSONParser
 
-from apps.osiete_osint.models import OsintList, Service, UrlScan, VtSummary
+from apps.osiete_osint.models import (
+    OsintList, Service, UrlScan, VtComments, VtSummary)
 from apps.osiete_osint.serializers import (OsintListSerializer, 
-UrlScanSerializer, VtSummarySerializer)
+    UrlScanSerializer, VtCommentsSerializer, VtSummarySerializer)
 
 # Create your views here.
 
-def top_page(request):
+def top_page():
     """
     List all OSINTs, or create a new OSINT.
     This method is used by React Frontend(osiete osint react).
     """
     services = Service.objects.all()
-    print(services)
     return HttpResponse(services)
 
 @csrf_exempt
@@ -102,3 +102,23 @@ def api_vtsummary(request):
                 message = f'{req["osint_id"]} is not regisered yet'
                 return JsonResponse(message, status=202)
             return JsonResponse(serializer.errors, status=400)
+
+@csrf_exempt
+def api_vtcomments(request):
+    """
+    Return VirusTotal Comments, if there is.
+    This function uses only POST method.
+    """
+    if request.method == 'POST':
+        req = JSONParser().parse(request)
+        if OsintList.objects.filter(osint_id=req['osint_id']):
+            try:
+                vtcomes = VtComments.objects.filter(osint_id__osint_id=req['osint_id'])
+                serializer = VtCommentsSerializer(vtcomes, many=True)
+                return JsonResponse(serializer.data, safe=False)
+            except BaseException as e:
+                message = f'{req["osint_id"]} has no comments yet'
+                return JsonResponse(message, status=202, safe=False)
+        else:
+            # This OSINT does not have a comment yet.
+            pass

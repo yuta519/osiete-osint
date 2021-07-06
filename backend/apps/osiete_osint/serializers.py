@@ -1,6 +1,7 @@
 from rest_framework import serializers
 
-from apps.osiete_osint.models import (OsintList, Service, UrlScan, VtSummary)
+from apps.osiete_osint.models import (
+    OsintList, Service, UrlScan, VtComments, VtSummary)
 
 
 class ServiceSerializer(serializers.HyperlinkedModelSerializer):
@@ -20,6 +21,12 @@ class UrlScanSerializer(serializers.ModelSerializer):
         model = UrlScan
         fields = ('osint_id', 'date', 'domain', 'primary_ip', 'server', 'asn', 
                   'asnname', 'ptr', 'screenshot') 
+
+
+class VtCommentsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = VtComments
+        fields = ('osint_id', 'date', 'comment')
 
 
 class VtSummarySerializer(serializers.ModelSerializer):
