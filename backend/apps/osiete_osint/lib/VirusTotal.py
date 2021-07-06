@@ -14,9 +14,13 @@ class VirusTotalClient(AbstractBaseClient):
     """ """
     def __init__(self):
         super().__init__()
-        self.headers['x-apikey'] = ('1c2fb58f31b82e29a93c6a87392b21bc3b64247b8'
-                                    'af0a42788a7dd03d6728c57')
+        # self.headers['x-apikey'] = ('1c2fb58f31b82e29a93c6a87392b21bc3b64247b8'
+        #                             'af0a42788a7dd03d6728c57')
+        self.headers['x-apikey'] = ('97a8defe93052efcbc14dce54f74e5ece30d1e'
+                                    'cfc94a7c765948cef35b3b92ba')
+        
         self.vt = Service.objects.get(slug='vt')
+
 
     # TODO: Change method name
     # TODO: Using vt.py for handling IP, Domain, URL
@@ -44,8 +48,8 @@ class VirusTotalClient(AbstractBaseClient):
                     # self.request(f'{base}{ip}/resolution')
                     ]
         # TODO@yuta create historical and resolution
-        if response[0]['error'] or response[0]['error']:
-            raise RuntimeError('Error: exceeded VirusTotal API restriction')
+        # if response[0]['error'] or response[1]['error']:
+        #     raise RuntimeError('Error: exceeded VirusTotal API restriction')
         result = self.parse_summary_ipaddress(response[0])
         result['comments'] = self.parse_comments_of_ipaddress(response[1])
         return result
@@ -54,7 +58,6 @@ class VirusTotalClient(AbstractBaseClient):
         """ """
         attributes = res['data']['attributes']
         analysis = res['data']['attributes']['last_analysis_stats']
-
         if analysis['malicious'] > 0:
             malicious_level = OsintList.MAL
         elif analysis['malicious'] == 0 and analysis['suspicious'] > 0:
@@ -69,7 +72,9 @@ class VirusTotalClient(AbstractBaseClient):
         return result
 
     def parse_comments_of_ipaddress(self, res) -> dict:     
-        result = [r['attributes']['text'] for r in res['data']]
+        result = {}
+        for r in res['data']:
+            result[r['attributes']['date']] = r['attributes']['text']
         return result
     
     def parse_historical_whois_of_ipaddress(self, res):  
@@ -145,15 +150,13 @@ class VirusTotalClient(AbstractBaseClient):
             VtSummary.objects.update_or_create(gui_url=vt_result['gui'],
                             osint_id=osint_data, owner=vt_result['owner'],
                             malicious_level=vt_result['malicious_level'])
-            for comment in vt_result['comments']:
+            for date, comment in vt_result['comments'].items():
                 try:
-                    VtComments.objects.update_or_create(osint_id=osint_data, 
-                                                        comment=comment)
+                    VtComments.objects.update_or_create(
+                        osint_id=osint_data, date=date, comment=comment)
                 except:
-                    print('Could not insert data')
+                    print('Erro: Could not insert data')
             print('VirusTotal information is updated.')
             time.sleep(15)
         except BaseException as e:
-            print(e)
-            print('Something went wrong')
-            pass
+            print('Something went wrong around ', e)
