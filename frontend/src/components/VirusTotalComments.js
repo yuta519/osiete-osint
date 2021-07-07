@@ -11,6 +11,7 @@ export const VirusTotalComments = (osint) => {
         osint_id: osint['osint']
       })
       setVtcomments(response.data[0])
+      console.log(response.data)
     } 
     fetch_vtcomments()
   },[])
