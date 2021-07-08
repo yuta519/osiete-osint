@@ -1,4 +1,5 @@
 import json
+from re import I
 
 from django.http import HttpResponse, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
@@ -117,8 +118,10 @@ def api_vtcomments(request):
                 serializer = VtCommentsSerializer(vtcomes, many=True)
                 return JsonResponse(serializer.data, safe=False)
             except BaseException as e:
-                message = f'{req["osint_id"]} has no comments yet'
-                return JsonResponse(message, status=202, safe=False)
+                return JsonResponse(e, status=500, safe=False)
         else:
             # This OSINT does not have a comment yet.
-            pass
+            message = f'{req["osint_id"]} has no comments yet'
+            return JsonResponse(message, status=202, safe=False)
+    else:
+        raise RuntimeError('Method Not Allowed.')

@@ -12,7 +12,6 @@ export const VirusTotalDetail = (osint) => {
         osint_id: osint['osint']
       })
       setVtosint(response.data)
-      console.log(response.data)
     }
     fetch_vtsummary()
   }, [osint])

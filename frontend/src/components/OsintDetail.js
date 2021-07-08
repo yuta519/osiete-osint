@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 
 import { UrlscanDetail } from './UrlscanDetail'
 import { VirusTotalDetail } from './VirusTotalDetail'
+import { VirusTotalComments } from './VirusTotalComments'
 
 function OsintDetail() {
   const [type, setType] = useState([])
@@ -27,7 +28,6 @@ function OsintDetail() {
 
   useEffect(() => {
     const search_osint = async() => {
-      // const response = await axios.post('http://18.188.220.79:8000/api/v1/osints', {
       const response = await axios.post('http://localhost:8000/api/v1/osints', {
         osint_id: osint,
       })
@@ -84,6 +84,7 @@ function OsintDetail() {
       </div>
       <div className="card-group" style={{ "margin": "10px" }}>
         <VirusTotalDetail osint={osint}/>
+        <VirusTotalComments osint={osint}/>
         <UrlscanDetail osint={osint}/>
       </div>
 
