@@ -10,8 +10,7 @@ export const VirusTotalComments = (osint) => {
       const response = await axios.post('http://localhost:8000/api/v1/vt/comments',{
         osint_id: osint['osint']
       })
-      setVtcomments(response.data[0])
-      console.log(response.data)
+      setVtcomments(response.data)
     } 
     fetch_vtcomments()
   },[])
@@ -31,34 +30,12 @@ export const VirusTotalComments = (osint) => {
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td>Posted Date</td>
-                  <td>{ vtcomments.date }</td>
+                { vtcomments.map((vtcomment, index) => (
+                <tr key={index}>
+                  <td>{ vtcomment.date }</td>
+                  <td>{ vtcomment.comment }</td>
                 </tr>
-                {/* <tr>
-                  <td>Domain</td>
-                  <td>{ usosint.domain }</td>
-                </tr>
-                <tr>
-                  <td>Primary IP</td>
-                  <td>{ usosint.primary_ip }</td>
-                </tr>
-                <tr>
-                  <td>PTR record</td>
-                  <td>{ usosint.ptr }</td>
-                </tr>
-                <tr>
-                  <td>Server</td>
-                  <td>{ usosint.server }</td>
-                </tr>
-                <tr>
-                  <td>ASN</td>
-                  <td>{ usosint.asn }</td>
-                </tr>
-                <tr>
-                  <td>Asnname</td>
-                  <td>{ usosint.asnname }</td>
-                </tr> */}
+                ))}
               </tbody>
             </table> 
         </div>
