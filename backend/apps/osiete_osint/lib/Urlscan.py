@@ -15,8 +15,7 @@ logger = logging.getLogger(__name__)
 class UrlScanClient(AbstractBaseClient):
     def __init__(self):
         super().__init__()
-        # self.headers = {'API-Key':os.environ.get('US_API'),
-        self.headers = {'API-Key':'a6472481-0a4c-4c13-9f2b-aaf391f140dc',
+        self.headers = {'API-Key':os.environ.get('US_API'),
                         'Content-Type':'application/json'}
         self.us = Service.objects.get(slug='us')
         
@@ -24,11 +23,13 @@ class UrlScanClient(AbstractBaseClient):
         target_osint = self.extract_url_domain(target_osint)
         endpoint = f'{self.us.url}/search/?q=domain:{target_osint}'
         response = requests.get(endpoint, headers=self.headers).json()
-        if response['results']:
+        if 'results' in response:
             result = []
             for res in response['results']:
                 result.append(self.parse_domain_detail(res))
             return result
+        elif 'status' in response:
+            print(response['status'], response['message'])
         else:
             return {'result': 'This IoC is not in UrlScan'}
     
