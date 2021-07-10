@@ -2,6 +2,7 @@ import datetime
 import logging
 import os
 import time
+from django.db.utils import IntegrityError
 
 from django.utils import timezone
 import requests
@@ -155,9 +156,9 @@ class VirusTotalClient(AbstractBaseClient):
                     print(self.SECRET_KEY, self.VTAPI)
                     VtComments.objects.update_or_create(
                         osint_id=osint_data, date=date, comment=comment)
-                except:
-                    print('Error: Could not insert comment')
-            print('VirusTotal information is updated.')
+                except IntegrityError:
+                    print('[Info] Same data already exists.')
+            print('[Info] VirusTotal information is updated.')
             time.sleep(15)
         except BaseException as e:
-            print('Something went wrong around ', e)
+            print('[Error] Something went wrong around ', e)
