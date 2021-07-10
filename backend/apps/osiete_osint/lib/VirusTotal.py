@@ -1,5 +1,6 @@
 import datetime
 import logging
+import os
 import time
 
 from django.utils import timezone
@@ -12,16 +13,14 @@ logger = logging.getLogger(__name__)
 
 
 class VirusTotalClient(AbstractBaseClient):
+
     """ """
     def __init__(self):
         super().__init__()
         # self.headers['x-apikey'] = ('1c2fb58f31b82e29a93c6a87392b21bc3b64247b8'
         #                             'af0a42788a7dd03d6728c57')
-        self.headers['x-apikey'] = ('97a8defe93052efcbc14dce54f74e5ece30d1e'
-                                    'cfc94a7c765948cef35b3b92ba')
-        
+        self.headers['x-apikey'] = os.environ.get('VT_API')
         self.vt = Service.objects.get(slug='vt')
-
 
     # TODO: Change method name
     # TODO: Using vt.py for handling IP, Domain, URL
@@ -131,7 +130,6 @@ class VirusTotalClient(AbstractBaseClient):
         print(not_yet_investgated)
         for target in not_yet_investgated:
             vt_result = self.fetch_vt_risk(target.data_id)
-            print(target, vt_result)
             target_data = OsintList.objects.get(data_id=target)
             target_data.analyzing_type = vt_result['type']
             target_data.gui_url = vt_result['gui']
@@ -154,10 +152,11 @@ class VirusTotalClient(AbstractBaseClient):
             for date, comment in vt_result['comments'].items():
                 try:
                     date = datetime.datetime.fromtimestamp(date)
+                    print(self.SECRET_KEY, self.VTAPI)
                     VtComments.objects.update_or_create(
                         osint_id=osint_data, date=date, comment=comment)
                 except:
-                    print('Error: Could not insert data')
+                    print('Error: Could not insert comment')
             print('VirusTotal information is updated.')
             time.sleep(15)
         except BaseException as e:

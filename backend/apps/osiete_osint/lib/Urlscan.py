@@ -1,5 +1,6 @@
 from datetime import datetime
 import logging
+import os
 import re
 
 from django.db.utils import IntegrityError
@@ -14,6 +15,7 @@ logger = logging.getLogger(__name__)
 class UrlScanClient(AbstractBaseClient):
     def __init__(self):
         super().__init__()
+        # self.headers = {'API-Key':os.environ.get('US_API'),
         self.headers = {'API-Key':'a6472481-0a4c-4c13-9f2b-aaf391f140dc',
                         'Content-Type':'application/json'}
         self.us = Service.objects.get(slug='us')
