@@ -1,3 +1,4 @@
+import datetime
 import logging
 import time
 
@@ -152,10 +153,11 @@ class VirusTotalClient(AbstractBaseClient):
                             malicious_level=vt_result['malicious_level'])
             for date, comment in vt_result['comments'].items():
                 try:
+                    date = datetime.datetime.fromtimestamp(date)
                     VtComments.objects.update_or_create(
                         osint_id=osint_data, date=date, comment=comment)
                 except:
-                    print('Erro: Could not insert data')
+                    print('Error: Could not insert data')
             print('VirusTotal information is updated.')
             time.sleep(15)
         except BaseException as e:
