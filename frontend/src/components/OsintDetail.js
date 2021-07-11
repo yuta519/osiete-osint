@@ -84,10 +84,11 @@ function OsintDetail() {
       </div>
       <div className="card-group" style={{ "margin": "10px" }}>
         <VirusTotalDetail osint={osint}/>
-        <VirusTotalComments osint={osint}/>
         <UrlscanDetail osint={osint}/>
       </div>
-
+      <div className="card-group" style={{ "margin": "10px" }}>
+        <VirusTotalComments osint={osint}/>
+      </div>
     </div>
   )
 }
