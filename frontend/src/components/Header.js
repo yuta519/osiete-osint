@@ -21,7 +21,7 @@ function Header() {
           <a className="nav-link" href="/search_osint">Search OSINT</a>
         </li>
         <li className="nav-item">
-          <a className="nav-link active" aria-current="page" href="what_is_osiete_osint">About</a>
+          <a className="nav-link active" aria-current="page" href="/what_is_osiete_osint">About</a>
         </li>
       </ul>
     </>

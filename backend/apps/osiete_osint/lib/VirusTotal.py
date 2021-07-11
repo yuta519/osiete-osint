@@ -18,8 +18,6 @@ class VirusTotalClient(AbstractBaseClient):
     """ """
     def __init__(self):
         super().__init__()
-        # self.headers['x-apikey'] = ('1c2fb58f31b82e29a93c6a87392b21bc3b64247b8'
-        #                             'af0a42788a7dd03d6728c57')
         self.headers['x-apikey'] = os.environ.get('VT_API')
         self.vt = Service.objects.get(slug='vt')
 

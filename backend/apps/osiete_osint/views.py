@@ -40,7 +40,6 @@ def osint_list(request):
             except:
                 message = f'{req["osint_id"]} is not updated yet'
                 return JsonResponse(message, status=202)
-                # raise RuntimeError(message)
         else:
             serializer = OsintListSerializer(data=req)
             print(req)
@@ -56,7 +55,6 @@ def api_urlscan(request):
     Return all Urlscan OSINTs, or an OSINT.
     This method is used by React Frontend(osiete osint react).
     """
-    # uscan = UrlScanClient()
     if request.method == 'GET':
         uscan_osints = UrlScan.objects.all()
         serializer = UrlScanSerializer(uscan_osints, many=True)
@@ -95,7 +93,6 @@ def api_vtsummary(request):
                 message = f'{req["osint_id"]} is not updated yet'
                 print(message)
                 return JsonResponse(message, status=202)
-                # raise RuntimeError(message)
         else:
             serializer = OsintListSerializer(data=req)
             if serializer.is_valid():
@@ -114,7 +111,8 @@ def api_vtcomments(request):
         req = JSONParser().parse(request)
         if OsintList.objects.filter(osint_id=req['osint_id']):
             try:
-                vtcomes = VtComments.objects.filter(osint_id__osint_id=req['osint_id'])
+                vtcomes = VtComments.objects.filter(
+                    osint_id__osint_id=req['osint_id'])
                 serializer = VtCommentsSerializer(vtcomes, many=True)
                 return JsonResponse(serializer.data, safe=False)
             except BaseException as e:
