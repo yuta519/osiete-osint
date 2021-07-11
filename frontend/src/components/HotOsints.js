@@ -34,10 +34,6 @@ function HotOsints() {
               : osint.osint_type === 2? (<td>Domain</td>) 
               : osint.osint_type === 3? (<td>File Hash</td>) 
               : (<td></td>) }
-              {/* { osint.malicious_level === 1? (<td>MALICIOUS</td>)
-              : osint.malicious_level === 2? (<td>SUSPICIOUS</td>) 
-              : osint.malicious_level === 3? (<td>SAFE</td>) 
-              : (<td></td>) } */}
               <td>{osint.updated_at}</td>
             </tr>
           ))}
