@@ -13,7 +13,7 @@ export const VirusTotalComments = (osint) => {
       setVtcomments(response.data)
     } 
     fetch_vtcomments()
-  },[])
+  },[vtcomments])
 
   return (
     <>
