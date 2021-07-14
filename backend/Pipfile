@@ -8,9 +8,9 @@ django = "*"
 requests = "*"
 djangorestframework = "*"
 django-cors-headers = "*"
+shodan = "*"
 
 [dev-packages]
 
 [requires]
 python_version = "3.9"
-
