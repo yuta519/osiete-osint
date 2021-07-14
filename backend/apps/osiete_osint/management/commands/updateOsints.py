@@ -2,6 +2,7 @@ from datetime import datetime, timedelta
 from django.core.management.base import BaseCommand
 from django.utils import timezone
 
+from apps.osiete_osint.lib.Shodan import ShodanClient
 from apps.osiete_osint.lib.Urlscan import UrlScanClient 
 from apps.osiete_osint.lib.VirusTotal import VirusTotalClient 
 from apps.osiete_osint.models import OsintList 
@@ -17,8 +18,13 @@ class Command(BaseCommand):
     def update_osint_of_us(self, osint) -> None:
         usclient = UrlScanClient()
         usclient.update_uscaninfo(osint)
+    
+    def test_shodan(self) -> None:
+        shodan = ShodanClient()
+        shodan.test()
 
     def handle(self, *args, **kwargs) -> None:
+        self.test_shodan()
         time_threshold = datetime.now() - timedelta(minutes=2)
         # time_threshold = datetime.now() - timedelta(days=3)
         time_threshold = timezone.make_aware(time_threshold)
