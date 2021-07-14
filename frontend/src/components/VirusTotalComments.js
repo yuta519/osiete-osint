@@ -25,8 +25,8 @@ export const VirusTotalComments = (osint) => {
             <table className="table">
               <thead>
                 <tr>
-                  <th>#</th>
-                  <th>---</th>
+                  <th style={{ "width": "30%" }}>Post Date</th>
+                  <th style={{ "width": "70%" }}>Comment</th>
                 </tr>
               </thead>
               <tbody>
